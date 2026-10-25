@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { api } from '../api/client'
 import Modal from '../components/Modal'
 import VehicleForm from '../components/VehicleForm'
-import { useToast } from '../components/Toast'
+import { useToast } from '../hooks/useToast'
 import { formatPrice } from '../utils/format'
 
 export default function AdminPage() {

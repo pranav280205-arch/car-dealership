@@ -1,11 +1,4 @@
-export const EMPTY_FILTERS = {
-  q: '',
-  make: '',
-  category: '',
-  minPrice: '',
-  maxPrice: '',
-  inStock: false,
-}
+import { EMPTY_FILTERS } from '../utils/filters'
 
 /** Search box plus filters. Fully controlled: the page owns the state. */
 export default function FilterBar({ filters, onChange, categories }) {

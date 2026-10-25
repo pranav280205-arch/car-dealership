@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { api } from '../api/client'
-import FilterBar, { EMPTY_FILTERS } from '../components/FilterBar'
+import FilterBar from '../components/FilterBar'
 import VehicleCard from '../components/VehicleCard'
-import { useToast } from '../components/Toast'
+import { useToast } from '../hooks/useToast'
 import useDebouncedValue from '../hooks/useDebouncedValue'
+import { EMPTY_FILTERS } from '../utils/filters'
 import { formatPrice, toSearchParams } from '../utils/format'
 
 /** URL query string -> filter form state (the reverse of toSearchParams). */
@@ -25,7 +26,7 @@ export default function InventoryPage() {
   const [filters, setFilters] = useState(() => filtersFromUrl(urlParams))
   const [vehicles, setVehicles] = useState([])
   const [categories, setCategories] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loadedQuery, setLoadedQuery] = useState(null)
   const [error, setError] = useState('')
   const [buyingId, setBuyingId] = useState(null)
 
@@ -43,7 +44,6 @@ export default function InventoryPage() {
 
   useEffect(() => {
     let ignore = false
-    setLoading(true)
     setUrlParams(new URLSearchParams(query), { replace: true })
     api
       .searchVehicles(query)
@@ -54,7 +54,7 @@ export default function InventoryPage() {
         }
       })
       .catch((err) => !ignore && setError(err.message))
-      .finally(() => !ignore && setLoading(false))
+      .finally(() => !ignore && setLoadedQuery(query))
     return () => {
       ignore = true
     }
@@ -73,6 +73,7 @@ export default function InventoryPage() {
     }
   }
 
+  const loading = loadedQuery !== query
   const inStockCount = vehicles.filter((v) => v.quantity > 0).length
 
   return (

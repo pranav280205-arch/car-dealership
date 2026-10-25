@@ -1,6 +1,5 @@
-import { createContext, useCallback, useContext, useRef, useState } from 'react'
-
-const ToastContext = createContext(() => {})
+import { useCallback, useRef, useState } from 'react'
+import { ToastContext } from '../hooks/useToast'
 
 /** Small notification shown at the bottom of the screen for a few seconds. */
 export function ToastProvider({ children }) {
@@ -32,6 +31,3 @@ export function ToastProvider({ children }) {
   )
 }
 
-export function useToast() {
-  return useContext(ToastContext)
-}
