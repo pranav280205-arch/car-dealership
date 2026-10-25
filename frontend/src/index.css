@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+/* Colours borrowed from a car lot: tarmac, concrete, the yellow of a
+   price tag on the windscreen, and go/stop for stock. */
+@theme {
+  --color-tarmac: #23292f;
+  --color-tarmac-soft: #4a525b;
+  --color-concrete: #eef0f2;
+  --color-line: #d7dbe0;
+  --color-tag: #f5c518;
+  --color-tag-deep: #d9a900;
+  --color-go: #1f7a5c;
+  --color-stop: #b42318;
+
+  --font-sans: "Barlow", system-ui, sans-serif;
+  --font-display: "Barlow Condensed", "Barlow", system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-concrete text-tarmac font-sans antialiased;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-tag-deep);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold
+      transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-tarmac text-white hover:bg-tarmac-soft;
+  }
+  .btn-tag {
+    @apply btn bg-tag text-tarmac hover:bg-tag-deep;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-white text-tarmac hover:bg-concrete;
+  }
+  .btn-danger {
+    @apply btn bg-stop text-white hover:bg-red-800;
+  }
+  .field {
+    @apply w-full rounded-md border border-line bg-white px-3 py-2 text-sm
+      placeholder:text-tarmac-soft/60 focus:border-tarmac focus:outline-none;
+  }
+  .label {
+    @apply mb-1 block text-sm font-medium text-tarmac-soft;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
