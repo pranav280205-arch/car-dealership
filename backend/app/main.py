@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 
 from app.config import settings
 from app.database import Base, engine
-from app.routers import auth
+from app.routers import auth, vehicles
 from app.services.errors import DomainError
 
 
@@ -29,6 +29,7 @@ def create_app() -> FastAPI:
         return {"status": "ok"}
 
     app.include_router(auth.router)
+    app.include_router(vehicles.router)
     return app
 
 

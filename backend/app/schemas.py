@@ -26,3 +26,40 @@ class TokenOut(BaseModel):
     access_token: str
     token_type: str = "bearer"
     user: UserOut
+
+
+# ---------- vehicles ----------
+
+class VehicleCreate(BaseModel):
+    make: str = Field(min_length=1, max_length=50)
+    model: str = Field(min_length=1, max_length=50)
+    category: str = Field(min_length=1, max_length=30)
+    year: int | None = Field(default=None, ge=1900, le=2100)
+    price: float = Field(ge=0)
+    quantity: int = Field(default=0, ge=0)
+    description: str | None = Field(default=None, max_length=1000)
+
+
+class VehicleUpdate(BaseModel):
+    """All fields optional; only the ones sent are changed."""
+
+    make: str | None = Field(default=None, min_length=1, max_length=50)
+    model: str | None = Field(default=None, min_length=1, max_length=50)
+    category: str | None = Field(default=None, min_length=1, max_length=30)
+    year: int | None = Field(default=None, ge=1900, le=2100)
+    price: float | None = Field(default=None, ge=0)
+    quantity: int | None = Field(default=None, ge=0)
+    description: str | None = Field(default=None, max_length=1000)
+
+
+class VehicleOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    make: str
+    model: str
+    category: str
+    year: int | None
+    price: float
+    quantity: int
+    description: str | None
