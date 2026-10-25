@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, Response, status
+from fastapi import APIRouter, Depends, Query, Response, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.deps import get_current_user, require_admin
 from app.schemas import VehicleCreate, VehicleOut, VehicleUpdate
-from app.services.vehicle_service import VehicleService
+from app.services.vehicle_service import SearchFilters, VehicleService
 
 router = APIRouter(prefix="/api/vehicles", tags=["vehicles"])
 
@@ -12,6 +12,24 @@ router = APIRouter(prefix="/api/vehicles", tags=["vehicles"])
 @router.get("", response_model=list[VehicleOut], dependencies=[Depends(get_current_user)])
 def list_vehicles(db: Session = Depends(get_db)):
     return VehicleService(db).list_all()
+
+
+# Declared before /{vehicle_id} so "search" isn't parsed as an id.
+@router.get(
+    "/search", response_model=list[VehicleOut], dependencies=[Depends(get_current_user)]
+)
+def search_vehicles(
+    q: str | None = None,
+    make: str | None = None,
+    model: str | None = None,
+    category: str | None = None,
+    min_price: float | None = Query(default=None, ge=0),
+    max_price: float | None = Query(default=None, ge=0),
+    in_stock: bool = False,
+    db: Session = Depends(get_db),
+):
+    filters = SearchFilters(q, make, model, category, min_price, max_price, in_stock)
+    return VehicleService(db).search(filters)
 
 
 @router.post(
