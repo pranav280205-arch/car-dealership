@@ -1,10 +1,12 @@
 """Entry point for the Car Dealership Inventory API."""
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from app.config import settings
 from app.database import Base, engine
 from app.routers import auth
+from app.services.errors import DomainError
 
 
 def create_app() -> FastAPI:
@@ -18,12 +20,15 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    @app.exception_handler(DomainError)
+    def handle_domain_error(_: Request, exc: DomainError):
+        return JSONResponse(status_code=exc.status_code, content={"detail": exc.message})
+
     @app.get("/api/health")
     def health():
         return {"status": "ok"}
 
     app.include_router(auth.router)
-
     return app
 
 
