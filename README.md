@@ -159,6 +159,26 @@ docs/
 
 The commit history follows red, green, refactor. Each feature starts with a `test:` commit containing failing tests, then a `feat:` commit that makes them pass, and sometimes a `refactor:` commit. One honest slip is visible in the history: `16b91e6` was committed with one failing test because the test's expectation was wrong ("ta" matches both Tata and Toyota). It was fixed in the next commit, `238c277`, and commits were gated on a passing suite after that.
 
+## My AI Usage
+
+### Tools used
+
+- **Claude (Anthropic, model Claude Opus 5.5) in the claude.ai app**, with its code-execution workspace. This was the only AI tool used.
+
+### How I used it
+
+I want to be upfront: **Claude wrote nearly all of the code in this repository.** I gave it the kata brief, chose Python + FastAPI, and asked it to build the whole project. In the first session it:
+
+- planned the structure and the extra features (overselling protection, order history, admin dashboard, URL-synced filters)
+- wrote the backend tests first, then the code to pass them, then refactors. That is why every commit carries the `Co-authored-by: Claude` trailer
+- wrote the React frontend and its tests
+- ran both test suites, ran the app in a headless browser, took the screenshots in this README, and fixed what it noticed: a low-contrast warning colour, a broken mobile navbar, fonts not loading offline, and a Tailwind v4 build error
+- wrote this README, the test report and the seed data
+
+Every commit in this repo was made with AI involvement, so every commit has the co-author trailer.
+
+The full, unedited conversation is linked in [PROMPTS.md](PROMPTS.md).
+
 ### What I worked on
 
 - I chose Python and FastAPI for the backend, set up the project on my Mac, and published the repository to GitHub.
@@ -174,3 +194,7 @@ The commit history follows red, green, refactor. Each feature starts with a `tes
 - The review process helped me catch issues I might otherwise have missed. For example, one test expectation was incorrect and had to be fixed in commit `238c277`. In another instance, the suggested starter files could have overwritten my existing backend, so I checked them against the current project before using anything.
 - I recognise that I need a deeper understanding of some service implementations and tests. I'm reviewing those parts before the interview so I can explain the architecture, important decisions, edge cases, and testing approach clearly.
 - Going forward, I'd like to take a more code-first approach: implement the core functionality myself, then use AI primarily for reviewing the design, identifying edge cases, debugging, and improving test coverage.
+
+## Deployment
+
+Not deployed yet. The simplest route would be the backend on Render or Railway with a managed Postgres (`DATABASE_URL`, `JWT_SECRET` and `CORS_ORIGINS` set), and the frontend on Vercel with `VITE_API_URL` pointing at the backend.
