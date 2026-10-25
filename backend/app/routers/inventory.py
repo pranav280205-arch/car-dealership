@@ -10,9 +10,11 @@ from app.schemas import (
     PurchaseOut,
     PurchaseRequest,
     RestockRequest,
+    StatsOut,
     VehicleOut,
 )
 from app.services.inventory_service import InventoryService
+from app.services.stats_service import StatsService
 
 router = APIRouter(prefix="/api", tags=["inventory"])
 
@@ -48,3 +50,8 @@ def my_orders(user: User = Depends(get_current_user), db: Session = Depends(get_
 @router.get("/orders", response_model=list[OrderOut], dependencies=[Depends(require_admin)])
 def all_orders(db: Session = Depends(get_db)):
     return InventoryService(db).all_orders()
+
+
+@router.get("/stats", response_model=StatsOut, dependencies=[Depends(require_admin)])
+def dashboard_stats(db: Session = Depends(get_db)):
+    return StatsService(db).summary()

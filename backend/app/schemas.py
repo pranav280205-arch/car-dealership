@@ -93,3 +93,21 @@ class OrderOut(BaseModel):
 class PurchaseOut(BaseModel):
     order: OrderOut
     vehicle: VehicleOut
+
+
+# ---------- dashboard ----------
+
+class CategoryCount(BaseModel):
+    category: str
+    models: int
+    units: int
+
+
+class StatsOut(BaseModel):
+    total_models: int
+    units_in_stock: int
+    stock_value: float
+    units_sold: int
+    revenue: float
+    low_stock: list[VehicleOut]
+    by_category: list[CategoryCount]
