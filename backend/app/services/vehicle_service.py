@@ -1,10 +1,10 @@
 """Vehicle catalogue operations."""
 from dataclasses import dataclass
 
-from sqlalchemy import func, or_, select
+from sqlalchemy import func, or_, select, update
 from sqlalchemy.orm import Session
 
-from app.models import Vehicle
+from app.models import Order, Vehicle
 from app.services.errors import DomainError, NotFoundError
 
 
@@ -76,5 +76,10 @@ class VehicleService:
 
     def delete(self, vehicle_id: int) -> None:
         vehicle = self.get(vehicle_id)
+        # Keep past orders but unlink them. Done by hand because SQLite doesn't
+        # enforce ON DELETE SET NULL unless foreign keys are switched on.
+        self.db.execute(
+            update(Order).where(Order.vehicle_id == vehicle_id).values(vehicle_id=None)
+        )
         self.db.delete(vehicle)
         self.db.commit()
