@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import { Logo } from './AuthLayout'
 
 const linkClass = ({ isActive }) =>
-  `rounded-md px-3 py-2 text-sm font-medium ${
+  `whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium ${
     isActive ? 'bg-concrete text-tarmac' : 'text-tarmac-soft hover:text-tarmac'
   }`
 
@@ -18,11 +18,12 @@ export default function Navbar() {
 
   return (
     <header className="border-b border-line bg-white">
-      <nav className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
+      <nav className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3">
         <NavLink to="/" aria-label="Lot42 home">
           <Logo />
         </NavLink>
-        <div className="flex flex-1 flex-wrap items-center gap-1">
+        {/* On phones the links drop to their own row under the logo */}
+        <div className="order-last flex w-full items-center gap-1 overflow-x-auto sm:order-none sm:w-auto sm:flex-1">
           <NavLink to="/" end className={linkClass}>Inventory</NavLink>
           <NavLink to="/orders" className={linkClass}>My purchases</NavLink>
           {isAdmin && <NavLink to="/admin" className={linkClass}>Manage</NavLink>}
