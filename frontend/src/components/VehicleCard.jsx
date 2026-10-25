@@ -2,7 +2,7 @@ import { formatPrice, stockLabel } from '../utils/format'
 
 function stockColour(quantity) {
   if (quantity === 0) return 'text-stop'
-  if (quantity <= 2) return 'text-tag-deep'
+  if (quantity <= 2) return 'text-warn'
   return 'text-go'
 }
 

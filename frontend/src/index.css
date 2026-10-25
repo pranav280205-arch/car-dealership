@@ -9,6 +9,7 @@
   --color-line: #d7dbe0;
   --color-tag: #f5c518;
   --color-tag-deep: #d9a900;
+  --color-warn: #8a5a00; /* amber dark enough for text on white */
   --color-go: #1f7a5c;
   --color-stop: #b42318;
 

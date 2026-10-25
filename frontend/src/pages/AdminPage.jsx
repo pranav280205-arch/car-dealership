@@ -157,7 +157,7 @@ function LowStockPanel({ vehicles, onRestock }) {
             <li key={v.id} className="flex items-center justify-between gap-3 py-2">
               <span>
                 {v.make} {v.model}{' '}
-                <span className={`text-sm font-semibold ${v.quantity === 0 ? 'text-stop' : 'text-tag-deep'}`}>
+                <span className={`text-sm font-semibold ${v.quantity === 0 ? 'text-stop' : 'text-warn'}`}>
                   {v.quantity === 0 ? 'sold out' : `${v.quantity} left`}
                 </span>
               </span>
