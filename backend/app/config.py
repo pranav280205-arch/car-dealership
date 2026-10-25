@@ -11,6 +11,8 @@ class Settings:
         "JWT_SECRET", "dev-only-secret-please-change-me-0123456789abcdef"
     )
     jwt_algorithm: str = "HS256"
+    # bcrypt cost factor. 12 is a good default; tests drop it to 4 to stay fast.
+    bcrypt_rounds: int = int(os.getenv("BCRYPT_ROUNDS", "12"))
     token_expire_minutes: int = int(os.getenv("TOKEN_EXPIRE_MINUTES", "60"))
     cors_origins: list[str] = os.getenv(
         "CORS_ORIGINS", "http://localhost:5173"

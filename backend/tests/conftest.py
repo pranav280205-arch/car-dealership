@@ -3,12 +3,19 @@
 Every test gets a fresh SQLite database file in a temp folder, so tests never
 touch the dev database and never depend on each other.
 """
-import pytest
-from fastapi.testclient import TestClient
-from sqlalchemy.orm import sessionmaker
+import os
 
-from app.database import Base, get_db, make_engine
-from app.main import app
+# Must be set before the app is imported. Low bcrypt cost keeps the suite fast,
+# and pointing the app's own DB at a throwaway file keeps the repo clean.
+os.environ.setdefault("BCRYPT_ROUNDS", "4")
+os.environ.setdefault("DATABASE_URL", "sqlite:///./.pytest_app.db")
+
+import pytest  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
+from sqlalchemy.orm import sessionmaker  # noqa: E402
+
+from app.database import Base, get_db, make_engine  # noqa: E402
+from app.main import app  # noqa: E402
 
 
 @pytest.fixture
