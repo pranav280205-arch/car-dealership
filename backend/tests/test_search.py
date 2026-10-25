@@ -52,8 +52,10 @@ def test_search_combines_filters(client, user_headers, lot):
 
 
 def test_search_free_text_matches_make_or_model(client, user_headers, lot):
-    assert search(client, user_headers, q="ta") == ["Nexon"]  # Tata
-    assert search(client, user_headers, q="swi") == ["Swift"]
+    assert search(client, user_headers, q="tata") == ["Nexon"]  # matches make
+    assert search(client, user_headers, q="swi") == ["Swift"]  # matches model
+    # "ta" is in both "Tata" and "Toyota", so it should catch all three
+    assert search(client, user_headers, q="ta") == ["Corolla", "Fortuner", "Nexon"]
 
 
 def test_search_can_hide_out_of_stock(client, user_headers, lot):
