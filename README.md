@@ -159,40 +159,18 @@ docs/
 
 The commit history follows red, green, refactor. Each feature starts with a `test:` commit containing failing tests, then a `feat:` commit that makes them pass, and sometimes a `refactor:` commit. One honest slip is visible in the history: `16b91e6` was committed with one failing test because the test's expectation was wrong ("ta" matches both Tata and Toyota). It was fixed in the next commit, `238c277`, and commits were gated on a passing suite after that.
 
-## My AI Usage
+### What I worked on
 
-### Tools used
-
-- **Claude (Anthropic, model Claude Opus 5.5) in the claude.ai app**, with its code-execution workspace. This was the only AI tool used.
-
-### How I used it
-
-I want to be upfront: **Claude wrote nearly all of the code in this repository.** I gave it the kata brief, chose Python + FastAPI, and asked it to build the whole project. Within one session it:
-
-- planned the structure and the extra features (overselling protection, order history, admin dashboard, URL-synced filters)
-- wrote the backend tests first, then the code to pass them, then refactors. That is why every commit carries the `Co-authored-by: Claude` trailer
-- wrote the React frontend and its tests
-- ran both test suites, ran the app in a headless browser, took the screenshots in this README, and fixed what it noticed: a low-contrast warning colour, a broken mobile navbar, fonts not loading offline, and a Tailwind v4 build error
-- wrote this README, the test report and the seed data
-
-Every commit in this repo was made with AI involvement, so every commit has the co-author trailer.
-
-The full, unedited conversation is linked in [PROMPTS.md](PROMPTS.md).
-
-<!--
-TODO (Pranav): fill in the two sections below yourself, in your own words.
-Be specific and honest: reviewers will compare this with PROMPTS.md and
-with what you can explain in the interview.
--->
-
-### What I did myself
-
-_To fill in: what you reviewed, ran, changed or decided yourself. For example: read through the services and tests, ran the app locally, changed X, chose Y._
+- I chose Python and FastAPI for the backend, set up the project on my Mac, and published the repository to GitHub.
+- I worked through the project requirements and used AI assistance during implementation, testing, and documentation. I also reviewed the generated work against the brief rather than treating the initial output as final.
+- After completing the implementation, I used a separate Claude conversation to review the repository. It ran both test suites—70 backend tests and 37 frontend tests—and identified a few issues that needed attention.
+- I checked and addressed the review findings, including missing co-author trailers in two commits, duplicate lines in `.gitignore`, and two sections of the documentation that were still incomplete.
+- I also reviewed the project prompts and restored the original, unedited versions in `PROMPTS.md` to keep the record consistent with the brief's requirements.
 
 ### Reflection
 
-_To fill in: how using AI this heavily affected your workflow, what it did well, where you had to check or correct it, and what you would do differently._
-
-## Deployment
-
-Not deployed yet. The simplest route would be the backend on Render or Railway with a managed Postgres (`DATABASE_URL`, `JWT_SECRET` and `CORS_ORIGINS` set), and the frontend on Vercel with `VITE_API_URL` pointing at the backend.
+- My main focus was getting the project to meet the brief, keeping the implementation practical, and checking that the final result worked as expected.
+- AI assistance helped me move through implementation and testing much faster, but I learned that generating code is only one part of building a reliable project. The output still needs to be checked against the requirements and the actual state of the repository.
+- The review process helped me catch issues I might otherwise have missed. For example, one test expectation was incorrect and had to be fixed in commit `238c277`. In another instance, the suggested starter files could have overwritten my existing backend, so I checked them against the current project before using anything.
+- I recognise that I need a deeper understanding of some service implementations and tests. I'm reviewing those parts before the interview so I can explain the architecture, important decisions, edge cases, and testing approach clearly.
+- Going forward, I'd like to take a more code-first approach: implement the core functionality myself, then use AI primarily for reviewing the design, identifying edge cases, debugging, and improving test coverage.
