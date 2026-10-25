@@ -4,9 +4,7 @@ This project was built in a single conversation with Claude (Anthropic) in the c
 
 ## Public link to the full, unedited conversation
 
-**TODO (Pranav): paste the public share link here.** In claude.ai, open the conversation, click Share, then copy the link.
-
-`https://claude.ai/share/...`
+https://claude.ai/share/2880b685-e86c-441b-8cbd-64d273e68779
 
 ## My prompts, copied exactly as I typed them
 
